@@ -7,6 +7,7 @@ import Die from './components/Die';
 function App() {
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);
@@ -27,7 +28,7 @@ function App() {
 
   function allNewDice() {
     const newDice = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 15; i++) {
       newDice.push(generateNewDie());
     }
     return newDice;
@@ -40,8 +41,10 @@ function App() {
           return die.isHeld ? die : generateNewDie();
         })
       );
+      setCount(count + 1);
     } else {
       setTenzies(false);
+      setCount(0);
       setDice(allNewDice());
     }
   }
@@ -77,6 +80,7 @@ function App() {
         current value between rolls.
       </p>
       <div className="dice-container">{diceElements}</div>
+      <div className="roll-count">You have done {count} moves.</div>
       <button className="roll-dice" onClick={rollDice}>
         {tenzies ? 'New Game' : 'Roll'}
       </button>
